@@ -1,0 +1,9 @@
+---
+ansible_ssh_user: root
+
+homebase:
+  user: homebase
+  root: /opt/homebase/
+  authorized_keys:
+    - https://github.com/cndreisbach.keys
+  hostname: "{{ ansible_fqdn }}"

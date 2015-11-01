@@ -1,0 +1,17 @@
+---
+- name: Add apt key
+  apt_key: url={{item}} validate_certs=false
+  with_items:
+    - https://download.owncloud.org/download/repositories/stable/xUbuntu_14.04/Release.key
+- name: Add PPA
+  apt_repository: repo="{{item}}"
+  with_items:
+    - "deb http://download.owncloud.org/download/repositories/stable/xUbuntu_14.04/ /"
+  notify:
+    - Update apt cache
+- name: Install OwnCloud
+  apt: name=owncloud state=latest
+- name: Create OwnCloud MySQL database
+  mysql_db: name=owncloud state=present
+- name: Create OwnCloud MySQL user
+  mysql_user: name=owncloud password={{ secret.mysql_owncloud_password }} priv=owncloud.*:ALL state=present

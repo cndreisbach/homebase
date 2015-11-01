@@ -1,0 +1,10 @@
+---
+- name: Configure homebase
+  hosts: all
+  sudo: yes
+  remote_user: root
+  roles:
+    - { role: common }
+    - { role: mysql, tags: mysql }
+    - { role: apache, tags: apache }
+    - { role: owncloud, tags: owncloud }

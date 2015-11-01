@@ -1,0 +1,15 @@
+---
+- include: user.yml
+- include: firewall.yml
+
+- name: Set timezone variables
+  copy: content='America/New_York'
+        dest=/etc/timezone
+        owner=root
+        group=root
+        mode=0644
+        backup=yes
+  notify:
+    - Update timezone
+- name: Setup NTP
+  apt: name=ntp state=present    

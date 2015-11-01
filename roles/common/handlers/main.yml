@@ -1,0 +1,5 @@
+---
+- name: Update apt cache
+  apt: update_cache=yes
+- name: Update timezone
+  command: dpkg-reconfigure --frontend noninteractive tzdata

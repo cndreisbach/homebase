@@ -1,0 +1,31 @@
+---
+- name: Install Apache
+  apt: name=apache2 state=present
+- name: Install OpenSSL
+  apt: name=openssl state=present
+- name: Setup Apache modules
+  apache2_module: state=present name={{ item }}
+  with_items:
+    - ssl
+    - rewrite
+    - headers
+  notify:
+  - Restart apache2
+- name: Ensure SSL dir exists
+  file: path=/etc/apache2/ssl/ state=directory
+- name: Install SSL certificate
+  copy: content="{{ ssl_crt }}" dest=/etc/apache2/ssl/homebase.crt
+- name: Install SSL key
+  copy: content="{{ ssl_key }}" dest=/etc/apache2/ssl/homebase.key
+- name: Install homebase configuration
+  template: src=homebase.conf.j2 dest=/etc/apache2/sites-available/homebase.conf
+  notify:
+  - Restart apache2
+- name: Disable default configuration
+  command: a2dissite 000-default removes=/etc/apache2/sites-enabled/000-default.conf
+  notify:
+  - Restart apache2
+- name: Enable homebase configuration
+  command: a2ensite homebase creates=/etc/apache2/sites-enabled/homebase.conf
+  notify:
+  - Restart apache2

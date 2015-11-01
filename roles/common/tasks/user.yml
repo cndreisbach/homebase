@@ -1,0 +1,36 @@
+---
+- name: Create user
+  user: >
+    home={{ homebase.root }}
+    name={{ homebase.user }}
+    groups="www-data"
+    state=present
+  
+- name: Setup user home directory
+  file: >
+    path={{ homebase.root }} 
+    state=directory 
+    mode=0755 
+    owner={{ homebase.user }} 
+    group={{ homebase.user }}
+
+- name: Create SSH directory
+  file: >
+    state=directory
+    path={{ homebase.root }}.ssh/
+    mode=0700
+    owner={{ homebase.user }}
+    group={{ homebase.user }}
+
+- name: Add authorized keys
+  authorized_key: user={{ homebase.user }} key={{ item }}
+  with_items: "{{ homebase.authorized_keys }}"
+
+- name: Create sudoers
+  template:
+    src: sudoers.d.j2
+    dest: "/etc/sudoers.d/{{ homebase.user }}"
+    mode: 0440
+    owner: root
+    group: root
+    validate: "/usr/sbin/visudo -cf %s"
