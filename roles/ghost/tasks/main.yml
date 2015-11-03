@@ -1,0 +1,3 @@
+---
+- name: Download Ghost
+  get_url: url=https://ghost.org/zip/ghost-0.7.1.zip dest=/root/ghost.zip mode=0440
