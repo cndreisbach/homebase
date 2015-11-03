@@ -9,3 +9,4 @@ should make it easier to reuse these playbooks.
 ## Current applications
 
 * [OwnCloud](https://owncloud.org/)
+* [I, Librarian](https://i-librarian.net/)

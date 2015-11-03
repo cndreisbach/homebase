@@ -7,4 +7,6 @@
     - { role: common }
     - { role: mysql, tags: mysql }
     - { role: apache, tags: apache }
+    - { role: redis, tags: redis }
     - { role: owncloud, tags: owncloud }
+    - { role: librarian, tags: librarian }

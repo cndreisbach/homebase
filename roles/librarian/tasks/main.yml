@@ -1,0 +1,16 @@
+---
+- name: Download I, Librarian
+  get_url: url=http://i-librarian.net/downloads/i-librarian_3.5_all.deb
+           dest={{ homebase.root }}/i-librarian_3.5_all.deb
+- name: Install I, Librarian
+  apt: deb={{ homebase.root }}/i-librarian_3.5_all.deb
+  notify:
+    - Restart apache2
+- name: Install I, Librarian Apache configuration
+  template: src=i-librarian.conf.j2 dest=/etc/apache2/sites-available/i-librarian.conf
+  notify:
+  - Restart apache2
+- name: Enable I, Librarian configuration
+  command: a2ensite i-librarian creates=/etc/apache2/sites-enabled/i-librarian.conf
+  notify:
+  - Restart apache2

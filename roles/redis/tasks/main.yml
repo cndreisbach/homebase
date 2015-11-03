@@ -1,0 +1,14 @@
+---
+- name: Install Redis for transactional file locking
+  apt: name={{item}} state=present
+  with_items:
+    - redis-server
+    - php5-redis
+  notify:
+    - Restart apache2
+- name: Install Redis configuration
+  template: src=redis.conf.j2 dest=/etc/redis/redis.conf
+  notify:
+    - Restart redis
+- name: Make sure Redis is running
+  service: name=redis-server state=running

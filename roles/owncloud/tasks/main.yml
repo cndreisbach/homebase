@@ -7,11 +7,21 @@
   apt_repository: repo="{{item}}"
   with_items:
     - "deb http://download.owncloud.org/download/repositories/stable/xUbuntu_14.04/ /"
-  notify:
-    - Update apt cache
+    - "ppa:ondrej/php5-5.6"
 - name: Install OwnCloud
   apt: name=owncloud state=latest
 - name: Create OwnCloud MySQL database
   mysql_db: name=owncloud state=present
 - name: Create OwnCloud MySQL user
   mysql_user: name=owncloud password={{ secret.mysql_owncloud_password }} priv=owncloud.*:ALL state=present
+- name: Update PHP and modules
+  apt: name={{item}} state=latest
+  with_items:
+    - php5
+    - php5-apcu
+    - php5-redis
+  notify:
+    - Restart apache2
+- name: Setup cron
+  cron: name="run owncloud cron" job="php5 -f /var/www/owncloud/cron.php"
+        user="www-data" minute="*/15"
