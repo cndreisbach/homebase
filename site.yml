@@ -6,6 +6,7 @@
   roles:
     - { role: common }
     - { role: mysql, tags: mysql }
+    - { role: postgres, tags: postgres }
     - { role: apache, tags: apache }
     - { role: redis, tags: redis }
     - { role: owncloud, tags: owncloud }
