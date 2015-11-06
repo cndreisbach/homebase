@@ -1,0 +1,14 @@
+Alias /rss /var/www/tt-rss
+
+<Directory /usr/share/i-librarian/www>
+    Order deny,allow
+    Allow from all
+    <IfModule mod_php5.c>
+        php_value upload_max_filesize 400M
+        php_value post_max_size 800M
+    </IfModule>
+</Directory>
+
+<Directory /usr/share/i-librarian/www/library>
+    Order allow,deny
+</Directory>

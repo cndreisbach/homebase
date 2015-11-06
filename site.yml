@@ -4,10 +4,11 @@
   sudo: yes
   remote_user: root
   roles:
-    - { role: common }
+    - { role: common, tags: common }
     - { role: mysql, tags: mysql }
     - { role: postgres, tags: postgres }
     - { role: apache, tags: apache }
     - { role: redis, tags: redis }
     - { role: owncloud, tags: owncloud }
     - { role: librarian, tags: librarian }
+    - { role: tt-rss, tags: tt-rss }

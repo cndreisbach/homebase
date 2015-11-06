@@ -12,4 +12,6 @@
   notify:
     - Update timezone
 - name: Setup NTP
-  apt: name=ntp state=present    
+  apt: name=ntp state=present
+- name: Install git
+  apt: name=git state=present

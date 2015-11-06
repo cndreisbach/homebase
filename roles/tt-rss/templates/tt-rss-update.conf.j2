@@ -1,0 +1,9 @@
+description     "TT-RSS Updater"
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+
+setuid www-data
+chdir /var/www/tt-rss
+
+exec php ./update_daemon2.php

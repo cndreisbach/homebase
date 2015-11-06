@@ -1,0 +1,30 @@
+---
+- name: Pull source from the repository
+  git: >
+    repo="https://tt-rss.org/git/tt-rss.git"
+    dest="/var/www/tt-rss/"
+    version="master"
+    accept_hostkey=yes
+#   force=yes
+#   update=yes
+- name: Set permissions
+  file: path=/var/www/tt-rss state=directory owner=www-data group=www-data recurse=yes
+- name: Install Apache configuration
+  template: src=tt-rss.conf.j2 dest=/etc/apache2/sites-available/tt-rss.conf
+  notify:
+  - Restart apache2
+- name: Enable Apache configuration
+  command: a2ensite tt-rss creates=/etc/apache2/sites-enabled/tt-rss.conf
+  notify:
+  - Restart apache2
+- name: Create database
+  sudo_user: postgres
+  postgresql_db: name=ttrss owner={{ homebase.user }}
+- name: Create RSS update upstart service
+  template: src=tt-rss-update.conf.j2 dest=/etc/init/tt-rss-update.conf
+  tags:
+    - focus
+- name: Ensure RSS update is running
+  service: name=tt-rss-update state=running
+  tags:
+    - focus

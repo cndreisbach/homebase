@@ -11,6 +11,18 @@
     - headers
   notify:
   - Restart apache2
+- name: Add PHP PPA
+  apt_repository: repo="{{item}}"
+  with_items:
+    - "ppa:ondrej/php5-5.6"
+- name: Update PHP and modules
+  apt: name={{item}} state=latest
+  with_items:
+    - php5
+    - php5-apcu
+    - php5-redis
+  notify:
+    - Restart apache2  
 - name: Ensure SSL dir exists
   file: path=/etc/apache2/ssl/ state=directory
 - name: Install SSL certificate
