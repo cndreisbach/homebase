@@ -10,5 +10,5 @@ should make it easier to reuse these playbooks.
 
 * [OwnCloud](https://owncloud.org/)
 * [I, Librarian](https://i-librarian.net/)
-* [Tiny Tiny RSS}(https://tt-rss.org/)
+* [Tiny Tiny RSS](https://tt-rss.org/)
 * A static web site
