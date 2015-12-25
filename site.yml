@@ -8,6 +8,7 @@
     - { role: mysql, tags: mysql }
     - { role: postgres, tags: postgres }
     - { role: apache, tags: apache }
+    - { role: static_web, tags: static_web }
     - { role: redis, tags: redis }
     - { role: owncloud, tags: owncloud }
     - { role: librarian, tags: librarian }

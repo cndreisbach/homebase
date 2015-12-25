@@ -9,6 +9,8 @@
     - ssl
     - rewrite
     - headers
+    - expires
+    - cache
   notify:
   - Restart apache2
 - name: Add PHP PPA

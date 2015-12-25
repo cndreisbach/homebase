@@ -1,6 +1,12 @@
 ---
 ansible_ssh_user: root
 
+static_web:
+  hostname: www.dreisbach.us
+  host_aliases:
+    - dreisbach.us
+  webroot: /var/www/static_web
+
 homebase:
   user: homebase
   root: /opt/homebase/
