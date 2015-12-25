@@ -1,0 +1,13 @@
+---
+- name: Create static web directory
+  file: path="{{ static_web.webroot }}" state=directory owner="{{ homebase.user }}" mode=755
+- name: Install static web configuration
+  template: src=apache.conf.j2 dest=/etc/apache2/sites-available/{{ static_web.hostname }}.conf
+  notify:
+  - Restart apache2  
+- name: Enable static web configuration
+  command: a2ensite {{ static_web.hostname }} creates=/etc/apache2/sites-enabled/{{ static_web.hostname }}.conf
+  notify:
+  - Restart apache2  
+- name: Create initial index.html
+  copy: dest="{{ static_web.webroot }}/index.html" content="Please change me." owner="{{ homebase.user }}" mode=0644 force=no
